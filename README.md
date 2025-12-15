@@ -96,17 +96,6 @@ cd StayHub
 npm install
 ```
 
-3. Create a `.env` file in the root directory:
-
-```env
-PORT=3000
-MONGO_URL=your_mongodb_connection_string
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_KEY=your_key
-CLOUDINARY_SECRET=your_secret
-SESSION_SECRET=your_secret_key
-```
-
 4. Start the server:
 
 ```bash
@@ -164,14 +153,6 @@ http://localhost:3000
 * Authentication and authorization
 * Image upload handling
 * Environment configuration and deployment readiness
-
----
-
-## Author
-
-**Sanatan Rana**
-B.Tech Computer Science Student
-MERN Stack Learner
 
 ---
 
