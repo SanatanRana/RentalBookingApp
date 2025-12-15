@@ -1,8 +1,8 @@
 # Major-Project
 
-# StayHub
+# RentalBookingApp
 
-StayHub is a full-stack **MERN-based web application** designed for listing, managing, and booking stays (similar to a rental or accommodation platform). This repository currently contains the **backend (Node.js + Express + MongoDB)** with server-side rendering using **EJS**.
+RentalBookingApp is a full-stack **MERN-based web application** designed for listing, managing, and booking stays (similar to a rental or accommodation platform). This repository currently contains the **backend (Node.js + Express + MongoDB)** with server-side rendering using **EJS**.
 
 ---
 
