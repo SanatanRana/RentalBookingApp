@@ -5,22 +5,27 @@
             display: flex;
             flex-wrap: wrap;
         }
+
         .filter {
             text-align: center;
             margin-top: 2rem;
             margin-right: 2rem;
             opacity: 0.7;
         }
+
         .filer:hover {
             opacity: 1;
             cursor: pointer;
         }
+
         .filet p {
             font-size: 0.4rem;
         }
+
         .tax-info {
             display: none;
         }
+
         .tax-toggle {
             border: 1px solid black;
             border-radius: 1rem;
@@ -32,7 +37,7 @@
             align-items: center;
         }
     </style>
-    
+
     <div id="filters">
         <div class="filter">
             <div><i class="fa-solid fa-fire"></i></div>
@@ -85,34 +90,36 @@
 
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
 
-        <% for(let listing of allListings) { %>
+        <% if(allListings.length==0) { %>
+            <div class="col-12 mt-3">
+                <p>No listings found matching your search. <a href="/listings">View all listings</a></p>
+            </div>
+            <% } %>
 
-            <a href="/listings/<%= listing._id %>" class="listing-link"> 
-           
-                <div class="card col listing-card">
-                   
-                    <img src="<%= listing.image.url %>" class="card-img-top" alt="listing-image" style="height: 20rem;">
-                   
-                    <div class="card-img-overlay"></div>
-
-                    <div class="card-body">
-
-                       <b class="card-title"><%= listing.title %></b> <br>
-                      
-                       &#8377 <%= listing.price ? listing.price.toLocaleString("en-IN") : 'N/A' %>
-                       <div class="tax-info"><i>&nbsp &nbsp + 18% GST</i></div>
-                    </div>
-                </div>
-            </a>
-        <% } %>
+                <% for(let listing of allListings) { %>
+                    <a href="/listings/<%= listing._id %>" class="listing-link">
+                        <div class="card col listing-card">
+                            <img src="<%= listing.image.url %>" class="card-img-top" alt="listing-image"
+                                style="height: 20rem;">
+                            <div class="card-img-overlay"></div>
+                            <div class="card-body">
+                                <b class="card-title">
+                                    <%= listing.title %>
+                                </b> <br>
+                                &#8377 <%= listing.price ? listing.price.toLocaleString("en-IN") : 'N/A' %>
+                                    <div class="tax-info"><i>&nbsp &nbsp + 18% GST</i></div>
+                            </div>
+                        </div>
+                    </a>
+                    <% } %>
     </div>
 
     <script>
         let taxSwitch = document.getElementById("flexSwitchCheckDefault");
         taxSwitch.addEventListener("click", () => {
             let taxInfo = document.getElementsByClassName("tax-info");
-            for(info of taxInfo) {
-                if(info.style.display != "inline") {
+            for (info of taxInfo) {
+                if (info.style.display != "inline") {
                     info.style.display = "inline";
                 }
                 else {

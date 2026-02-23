@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV != "production") {
+if (process.env.NODE_ENV != "production") {
     require('dotenv').config();
 }
 
@@ -8,7 +8,7 @@ const mongoose = require('mongoose')
 const path = require('path')
 const methodOverride = require('method-override')
 const ejsMate = require('ejs-mate')
-const ExpressError = require("./utils/ExrpressError.js");
+const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
 
 const MongoStore = require("connect-mongo");
@@ -21,14 +21,15 @@ const userRouter = require("./routes/user.js");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+const bookingRouter = require("./routes/booking.js");
 
-const dbUrl = process.env.ATLASDB_URL;
+const dbUrl = process.env.ATLASDB_URL || MONGO_URL;
 
 main()
     .then(() => {
         console.log("Connected to DB")
     })
-    .catch(() => {
+    .catch((err) => {
         console.log(err)
     })
 
@@ -39,7 +40,7 @@ async function main() {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"))
 
-app.use(express.urlencoded({extended : true}))
+app.use(express.urlencoded({ extended: true }))
 
 app.use(methodOverride("_method"))
 
@@ -54,11 +55,11 @@ app.get("/", (req, res) => {
 })
 
 const store = MongoStore.create({
-    mongoUrl : dbUrl,
-    crypto : {
-        secret : process.env.SECRET
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: process.env.SECRET
     },
-    touchAfter : 24 * 3600
+    touchAfter: 24 * 3600
 })
 
 store.on("error", () => {
@@ -67,13 +68,13 @@ store.on("error", () => {
 
 const sessionOptions = {
     store,
-    secret : process.env.SECRET,
-    resave : false,
-    saveUninitialized : true,
-    cookie : {
-        expires : Date.now() + 7 * 24 * 60 * 60 * 1000,
-        maxAge : 7 * 24 * 60 * 60 * 1000,
-        httpOnly : true
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true
     }
 }
 
@@ -101,6 +102,8 @@ app.use((req, res, next) => {
 // // add routes of listings & reviews & user as middleware
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
+app.use("/listings/:id/bookings", bookingRouter);
+app.use("/bookings", bookingRouter);
 app.use("/", userRouter);
 
 // // to handle all types of request at all types of route
@@ -110,8 +113,8 @@ app.all("*", (req, res, next) => {
 
 // // error handller
 app.use((err, req, res, next) => {
-    
-    let {StatusCode = 500, message = "Something went wrong"} = err;
+
+    let { StatusCode = 500, message = "Something went wrong" } = err;
 
     res.status(StatusCode).render("error.ejs", { message })
 })

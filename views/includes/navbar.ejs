@@ -8,6 +8,7 @@
     justify-content: center;
     padding-inline: 1rem;
   }
+
   .search-btn:hover {
     background-color: #fe424d;
     color: #fff;
@@ -26,41 +27,41 @@
 </style>
 
 <nav class="navbar navbar-expand-md bg-body-light sticky-top border-bottom">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/"><i class="fa-regular fa-compass"></i></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-      data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/"><i class="fa-regular fa-compass"></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <div class="navbar-nav">
-            <a class="nav-link" href="/listings"><b>Explore</b></a>
-        </div>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/listings"><b>Explore</b></a>
+      </div>
 
-        <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2 search-inp" type="search" placeholder="Search destinations">
+      <div class="navbar-nav ms-auto">
+        <form class="d-flex" role="search" action="/listings" method="GET">
+          <input class="form-control me-2 search-inp" type="search" name="search" placeholder="Search destinations">
           <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
         </form>
-        </div>
+      </div>
 
-        <div class="navbar-nav ms-auto">
+      <div class="navbar-nav ms-auto">
 
-          <a class="nav-link" href="/listings/new">Airbnb your home</a>
+        <a class="nav-link" href="/listings/new">Airbnb your home</a>
 
-          <% if(!currUser) { %>
+        <% if(!currUser) { %>
 
-            <a class="nav-link" href="/signup"><b>Signup</b></a>
-            <a class="nav-link" href="/login"><b>Login</b></a>
+          <a class="nav-link" href="/signup"><b>Signup</b></a>
+          <a class="nav-link" href="/login"><b>Login</b></a>
           <% } %>
 
-          <% if(currUser) { %>
-            <a class="nav-link" href="/logout"><b>Logout</b></a>
-          <% } %>
-        </div>
-          
+            <% if(currUser) { %>
+              <a class="nav-link" href="/bookings"><b>My Bookings</b></a>
+              <a class="nav-link" href="/logout"><b>Logout</b></a>
+              <% } %>
       </div>
-      </div>
+
     </div>
-  </nav>
+  </div>
+  </div>
+</nav>
