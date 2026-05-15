@@ -8,6 +8,7 @@ const mongoose = require('mongoose')
 const path = require('path')
 const methodOverride = require('method-override')
 const ejsMate = require('ejs-mate')
+const cors = require('cors')
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
 
@@ -39,6 +40,12 @@ async function main() {
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"))
+
+app.use(cors({
+    origin: process.env.CLIENT_URL || "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    credentials: true
+}))
 
 app.use(express.urlencoded({ extended: true }))
 
@@ -121,4 +128,6 @@ app.use((err, req, res, next) => {
 
 app.listen(8080, () => {
     console.log("App is listening at port 8080")
-})
+});
+
+module.exports = app;
