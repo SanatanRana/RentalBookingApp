@@ -64,7 +64,7 @@ app.get("/", (req, res) => {
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     crypto: {
-        secret: process.env.SECRET
+        secret: process.env.SECRET || "thisshouldbeabettersecret"
     },
     touchAfter: 24 * 3600
 })
@@ -75,7 +75,7 @@ store.on("error", () => {
 
 const sessionOptions = {
     store,
-    secret: process.env.SECRET,
+    secret: process.env.SECRET || "thisshouldbeabettersecret",
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -122,6 +122,9 @@ app.all("*", (req, res, next) => {
 app.use((err, req, res, next) => {
 
     let { StatusCode = 500, message = "Something went wrong" } = err;
+    res.locals.currUser = req.user || null;
+    res.locals.success = req.flash ? req.flash("success") : [];
+    res.locals.error = req.flash ? req.flash("error") : [];
 
     res.status(StatusCode).render("error.ejs", { message })
 })
