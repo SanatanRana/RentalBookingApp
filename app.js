@@ -103,7 +103,7 @@ app.use((req, res, next) => {
     res.locals.currUser = req.user || null;
 
     next();
-})
+})  
 
 
 // // add routes of listings & reviews & user as middleware
